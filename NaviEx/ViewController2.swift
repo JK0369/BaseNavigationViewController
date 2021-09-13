@@ -12,5 +12,7 @@ class ViewController2: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .white
+        navigationItem.leftBarButtonItems = BaseNavigationController.getCustomBarButtonItems(isShowBackButton: true,
+                                                                                             labelText: "커스텀 타이틀")
     }
 }

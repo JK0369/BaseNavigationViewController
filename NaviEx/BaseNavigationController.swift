@@ -16,6 +16,45 @@ class BaseNavigationController: UINavigationController {
         return navigationController
     }
 
+    private static let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "button"), for: .normal)
+
+        return button
+    }()
+
+    private static let paddingBarButtonItem: UIBarButtonItem = {
+        let spaceBarButtonItem = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        spaceBarButtonItem.width = 32.0 /// 32.0만큼 왼쪽 버튼과 여백
+
+        return spaceBarButtonItem
+    }()
+
+    private static let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 16.0, weight: .bold)
+        label.textColor = .white
+        label.textAlignment = .left
+
+        return label
+    }()
+
+    static func getCustomBarButtonItems(isShowBackButton: Bool, labelText: String) -> [UIBarButtonItem] {
+
+        var barButtonItems = [UIBarButtonItem]()
+
+        if isShowBackButton {
+            let backButtonItem = UIBarButtonItem(customView: backButton)
+            barButtonItems.append(backButtonItem)
+            barButtonItems.append(paddingBarButtonItem)
+        }
+        titleLabel.text = labelText
+        let labelBarButtonItem = UIBarButtonItem(customView: titleLabel)
+        barButtonItems.append(labelBarButtonItem)
+
+        return barButtonItems
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -29,7 +68,7 @@ class BaseNavigationController: UINavigationController {
     private var backButtonAppearance: UIBarButtonItemAppearance {
         let backButtonAppearance = UIBarButtonItemAppearance()
         // backButton하단에 표출되는 text를 안보이게 설정
-        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear]
+        backButtonAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.clear, .font: UIFont.systemFont(ofSize: 0.0)]
 
         return backButtonAppearance
     }
